@@ -12,7 +12,21 @@ public class LoggingAspect {
 
     private final Logger myLogger = LoggerFactory.getLogger(getClass().getName());
 
-    @Before("execution(* com.catalyst.estores.service.*.*(..))")
+    //setup pointcut declarations
+    @Pointcut("execution(* com.catalyst.estores.controller.*.*(..))")
+    private void forControllerPackage(){}
+
+    @Pointcut("execution(* com.catalyst.estores.service.*.*(..))")
+    private void forServicePackage(){}
+
+    @Pointcut("execution(* com.catalyst.estores.repository.*.*(..))")
+    private void forRepositoryPackage(){}
+
+    @Pointcut("forControllerPackage() || forServicePackage() || forRepositoryPackage()")
+    private void forAppFlow(){}
+
+//    @Before("execution(* com.catalyst.estores.service.*.*(..))")
+    @Before("forAppFlow()")
     public void logBefore(JoinPoint joinPoint) {
         myLogger.info("Before execution of: {}", joinPoint.getSignature());
     }
