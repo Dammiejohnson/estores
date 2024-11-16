@@ -12,7 +12,6 @@ public class LoggingAspect {
 
     private final Logger myLogger = LoggerFactory.getLogger(getClass().getName());
 
-    //setup pointcut declarations
     @Pointcut("execution(* com.catalyst.estores.controller.*.*(..))")
     private void forControllerPackage(){}
 
